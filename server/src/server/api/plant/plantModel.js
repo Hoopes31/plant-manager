@@ -1,40 +1,23 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+const mongoose = require("mongoose")
+const Schema = mongoose.Schema;
 
-var PlantSchema = new Schema({
-  plantName: {
-    type: String,
-    required: true
-  },
-  plantType: {
-    type: String,
-    required: true
-  },
-  waterSchedule: {
+const PlantSchema = new Schema ({
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
+    },
+    plantName: {
+        type: String,
+        required: true
+    },
+    plantType: {
+        type: Object
+    },
     waterDate: {
-      type: Date,
-      default: Date.now
+        type: Date
     },
-    waterFrequency: {
-      type: Number,
-      default: 7
-    }
-  },
-  feedSchedule: {
     feedDate: {
-      type: Date,
-      default: Date.now
-    },
-    feedFrequency: {
-      type: Number,
-      default: 30
+        type: Date
     }
-  },
-  gardinID: {
-    type: Schema.Types.ObjectId,
-    ref: "gardin",
-    required: true
-  }
-});
-
-module.exports = mongoose.model("plants", PlantSchema);
+})
+module.exports = mongoose.model("plant", PlantSchema)

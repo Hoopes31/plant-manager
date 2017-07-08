@@ -2,7 +2,8 @@ import React from 'react'
 
 const Landing = () => (
     <div>
-        <h1>Splash Page, Login or Create an Account</h1>
+        <h1>Welcome!</h1>
+        <h3>Thank you for signing up! You are now on a mission to stop the senseless murder of household plants! Way to go.</h3>
     </div>
 )
 export default Landing

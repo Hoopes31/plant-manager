@@ -1,8 +1,8 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
-var bcrypt = require("bcrypt");
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+const bcrypt = require("bcrypt");
 
-var UserSchema = new Schema({
+const UserSchema = new Schema({
   username: {
     type: String,
     required: true,
@@ -24,10 +24,6 @@ var UserSchema = new Schema({
     type: String,
     required: true,
     minlength: 8
-  },
-  gardin: {
-    type: Schema.Types.ObjectId,
-    ref: "gardin"
   }
 });
 
@@ -35,8 +31,6 @@ var UserSchema = new Schema({
 
 UserSchema.pre("save", function(next) {
   //before saving a password we need to hash + salt
-  //for security
-
   if (!this.isModified("password")) return next();
 
   this.password = this.encryptPassword(this.password);
@@ -53,9 +47,24 @@ UserSchema.methods = {
     if (!plainTextPassword) {
       return "";
     } else {
-      var salt = bcrypt.genSaltSync(10);
+      const salt = bcrypt.genSaltSync(10);
       return bcrypt.hashSync(plainTextPassword, salt);
     }
   }
 };
-module.exports = mongoose.model("users", UserSchema);
+
+UserSchema.pre("save", function(next, done) {
+  const User = mongoose.model('User', UserSchema)
+  User.findOne({username: this.username}, function(err, result) {
+    if(err) {
+      done(err)
+    }
+    else if (result){
+      done(new Error("Username is already in use"))
+    }
+    else {
+      next()
+    }
+  })
+})
+module.exports = mongoose.model("user", UserSchema);

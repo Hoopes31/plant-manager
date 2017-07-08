@@ -20,7 +20,7 @@ export class AddPlantInputForm extends React.Component {
     render(){
       return(
         <div>
-          <form onSubmit={this.handleSubmit} action="/addPlant" method="POST">
+          <form onSubmit={this.handleSubmit}>
             Plant Name: 
             <PlantInput /> <br/>
             Plant Water Schedule:

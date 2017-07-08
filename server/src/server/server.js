@@ -6,9 +6,15 @@
 const express = require("express");
 const app = express();
 const logger = require("./util/logger");
+const config = require("./config/config")
 //Middleware Loaded:
 const middleware = require("./middleware/middleware");
 middleware(app);
+
+//Load Seed DB
+if (config.seed) {
+  require("./util/seed")
+}
 
 //Setup Route
 const api = require("./api/router");

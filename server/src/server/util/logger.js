@@ -23,10 +23,10 @@ var logger = {
     var args = _.toArray(arguments).map(function(arg) {
       if (typeof arg === "Object") {
         var string = JSON.stringify(arg, null, 2);
-        return logAlert + string.red;
+        return logAlert + string.blue;
       } else {
         arg.toString();
-        return logAlert + arg.red;
+        return logAlert + arg.blue;
       }
     });
 

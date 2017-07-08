@@ -1,4 +1,5 @@
 import React from 'react'
+import setHeader from './shared/setHeader'
 
 //Input fields: DONE
 //Validation: DONE
@@ -11,10 +12,15 @@ class Login extends React.Component {
         super()
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            errorMessage: ''
         }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    }
+
+    setToken(token) {
+        sessionStorage.setItem('Authorization', token)
     }
 
     handleChange(event) {
@@ -24,27 +30,20 @@ class Login extends React.Component {
     }
     //setToken to the state of the application
     //then set token to the browser
-    //This needs to be checked for proper use. I blieve the arguments passed to setItem are
+    //This needs to be checked for proper use. I believe the arguments passed to setItem are
     //named imporperly for JWT auth.
-    setToken(result) {
-        sessionStorage.setItem('Authorization', result.token)
-    }
 
     handleSubmit(event) {
         event.preventDefault()
-            fetch('/api/login', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                mode: 'cors',
-                body: JSON.stringify(this.state)
-            })
-            .then(response => response.json())
-            .then(result => this.setToken(result))
 
-            //.then(this.props.history.push('/gardin'))
+            const token = this.state.token
+            const body = JSON.stringify(this.state)
+
+            fetch('/api/login', setHeader('POST', token, body))
+            .then(response => response.json())
+            .then(response => this.setToken(response.token))
+            .then(response => this.props.history.push('/profile'))
+            .catch(error => this.setState({errorMessage: 'Login Invalid'}))
     }
 
     render(){
