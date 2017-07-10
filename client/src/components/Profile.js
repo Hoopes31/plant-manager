@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import setHeader from './shared/setHeader'
 import { PlantTimer } from './gardin/PlantTimer'
+import { Gardin } from './Gardin'
 
 class Profile extends Component {
     constructor(){
@@ -16,7 +17,7 @@ class Profile extends Component {
     //Send Auth Token back to server
     componentWillMount(){
 
-        const token = sessionStorage.getItem('Authorization')
+        const token = localStorage.getItem('Authorization')
     
         //Make fetch call with payload Object
         fetch('/api/profile', setHeader('GET', token))
@@ -26,7 +27,7 @@ class Profile extends Component {
     }
 
     clearStorage(){
-        sessionStorage.removeItem('Authorization')
+        localStorage.removeItem('Authorization')
     }
     //Add conditional rendering for plants
     render(){
@@ -35,9 +36,7 @@ class Profile extends Component {
             <div>
                 <Link to='/' onClick={this.clearStorage}>Logout</Link>
                 <h1>Profile Page</h1>
-                {this.state.plants.map((plant) => {
-                    return <PlantTimer plant={plant.plantName} days={plant.daysTilWater} />
-                })}
+                <Gardin plants={this.state.plants}/>
             </div>
             )
     }

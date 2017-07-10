@@ -3,10 +3,8 @@ const Plant = require('../plant/plantModel')
 
 exports.root = (req, res) => {
 
-    //Mock Data Set for return
-    //grab user Id
     const userId = req.user._id
-    //grab plants by user Id & serve
+
     Plant.find({owner: userId})
     .then(
         function(plants) {

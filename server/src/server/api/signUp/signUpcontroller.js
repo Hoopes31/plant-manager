@@ -21,7 +21,7 @@ exports.createUser = (req, res) => {
       return res.json({ err: err.message})
     }
     else {
-      var token = signToken(newUser._id);
+      var token = `Bearer ${signToken(newUser._id)}`;
       return res.json({ token: token });
     }  
   });

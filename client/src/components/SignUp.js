@@ -19,7 +19,7 @@ class SignUp extends React.Component {
     }
 
     setToken(result) {
-        sessionStorage.setItem('Authorization', result)
+        localStorage.setItem('Authorization', result)
     }
 
     handleChange = (event) => {
