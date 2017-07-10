@@ -1,55 +1,43 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import setHeader from './shared/setHeader'
-import Gardin from './Gardin'
+import { PlantTimer } from './gardin/PlantTimer'
 
 class Profile extends Component {
     constructor(){
         super()
         this.state = {
-            plantData: ''
+            plants: []
         }
 
     //Hard bind clearStorage to this object    
     this.clearStorage = this.clearStorage.bind(this)
     }
     //Send Auth Token back to server
-    componentDidMount(){
+    componentWillMount(){
 
         const token = sessionStorage.getItem('Authorization')
     
         //Make fetch call with payload Object
         fetch('/api/profile', setHeader('GET', token))
         .then(response => response.json())
-        .then(response => this.displayPlants(response))
+        .then(response => this.setState({plants: response.plants}))
         .catch(err => console.log(err))
     }
 
     clearStorage(){
         sessionStorage.removeItem('Authorization')
     }
-
-    displayPlants(data){
-        if (data) {
-            console.log(data)
-            return console.log('Display plant data')
-        }
-        else {
-            console.log('splash page')
-        }
-    }
-
+    //Add conditional rendering for plants
     render(){
+
         return(
             <div>
                 <Link to='/' onClick={this.clearStorage}>Logout</Link>
                 <h1>Profile Page</h1>
-                <ol>
-                    <li>If no plants serve splash page on how to use</li>
-                    <li>If plants serve plants</li>
-                    <li>Add Nav bar, Settings, etc</li>
-                </ol>
-                <Gardin />
+                {this.state.plants.map((plant) => {
+                    return <PlantTimer plant={plant.plantName} days={plant.daysTilWater} />
+                })}
             </div>
             )
     }

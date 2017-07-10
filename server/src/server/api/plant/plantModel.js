@@ -16,8 +16,14 @@ const PlantSchema = new Schema ({
     waterDate: {
         type: Date
     },
+    daysTilWater: {
+        type: Number
+    },
     feedDate: {
         type: Date
+    },
+    daysTilFeed: {
+        type: Number
     }
 })
 module.exports = mongoose.model("plant", PlantSchema)

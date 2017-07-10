@@ -20,19 +20,26 @@ const plants = [
         plantName: "Harry",
         plantType: "ZZ",
         waterDate: Date.now(),
-        feedDate: Date.now()
+        daysTilWater: 1,
+        feedDate: Date.now(),
+        daysTilFeed: 45
     },
     {
         plantName: "John",
         plantType: "Lily",
         waterDate: Date.now(),
-        feedDate: Date.now()       
+        daysTilWater: 2,
+        feedDate: Date.now(),
+        daysTilFeed: 60
+
     },
     {
         plantName: "David",
         plantType: "Ivy",
         waterDate: Date.now(),
-        feedDate: Date.now()  
+        daysTilWater: 5,
+        feedDate: Date.now(),
+        daysTilFeed: 30  
     }
 ]
 
